@@ -1,0 +1,24 @@
+h1, h2, h3, p{
+    padding:0px;
+    margin:0px;
+    font-family:"Helvetica", "Arial", "sans-serif";
+}
+
+h2{
+    
+    }
+
+.timer{
+    margin-left:30px;
+}
+
+.timer p{
+    margin-left:15px;
+}
+
+.section{
+    padding:5px;
+    margin:10px 10px 0px 10px;
+    border:1px solid black;
+    border-radius:10px;
+}
