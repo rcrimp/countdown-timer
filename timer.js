@@ -31,19 +31,31 @@ var timer = (function () {
     }
 
     pub.setup = function () {
-        setupTimer(new Date("9:30 6 June 2014"), "comp112");
-        setupTimer(new Date("9:30 18 June 2014"), "comp150");
-
-        setupTimer(new Date("14:30 7 June 2014"), "cosc241");
-        setupTimer(new Date("9:30 4 June 2014"), "cosc243");
-
-        setupTimer(new Date("9:30 9 June 2014"), "cosc341");
-        setupTimer(new Date("9:30 10 June 2014"), "cosc342");
-        setupTimer(new Date("14:30 13 June 2014"), "cosc343");
-        setupTimer(new Date("14:30 5 June 2014"), "tele301");
+        //new Date(year, month, day, hours, minutes, seconds, milliseconds)
         
-        setupTimer(new Date("14:30 18 June 2014"), "math272");
-        setupTimer(new Date("14:30 6 June 2014"), "math160");
+        /*
+          setupTimer(new Date("9:30  6  June 2014"), "comp112");
+          setupTimer(new Date("9:30  18 June 2014"), "comp150");
+          setupTimer(new Date("14:30 7  June 2014"), "cosc241");
+          setupTimer(new Date("9:30  4  June 2014"), "cosc243");
+          setupTimer(new Date("9:30  9  June 2014"), "cosc341");
+          setupTimer(new Date("9:30  10 June 2014"), "cosc342");
+          setupTimer(new Date("14:30 13 June 2014"), "cosc343");
+          setupTimer(new Date("14:30 5  June 2014"), "tele301");
+          setupTimer(new Date("14:30 18 June 2014"), "math272");
+          setupTimer(new Date("14:30 6  June 2014"), "math160");
+        */
+
+        setupTimer(new Date(2014, 5, 6, 9, 30, 0, 0), "comp112");
+        setupTimer(new Date(2014, 5, 18, 9, 30, 0, 0), "comp150");
+        setupTimer(new Date(2014, 5, 7, 14, 30, 0, 0), "cosc241");
+        setupTimer(new Date(2014, 5, 4, 9, 30, 0, 0), "cosc243");
+        setupTimer(new Date(2014, 5, 9, 9, 30, 0, 0), "cosc341");
+        setupTimer(new Date(2014, 5, 10, 9, 30, 0, 0), "cosc342");
+        setupTimer(new Date(2014, 5, 13, 14, 30, 0, 0), "cosc343");
+        setupTimer(new Date(2014, 5, 5, 14, 30, 0, 0), "tele301");
+        setupTimer(new Date(2014, 5, 18, 14, 30, 0, 0), "math272");
+        setupTimer(new Date(2014, 5, 6, 14, 30, 0, 0), "math160");
     }
     return pub;
 
