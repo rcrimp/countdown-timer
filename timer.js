@@ -1,12 +1,44 @@
 var timer = (function () {
     var pub = {};
 
-    var second = 1000;
+    var second = 1000; /* 1000 milliseconds */
     var minute = 60 * second;
     var hour = 60 * minute;
     var day = 24 * hour;
     
+    function parseMonth(m) {
+        switch (m+1) {
+	case(1):  return "January";
+	case(2):  return "February";
+	case(3):  return "March";
+	case(4):  return "April";
+	case(5):  return "May";
+	case(6):  return "June";
+	case(7):  return "July";
+	case(8):  return "August";
+	case(9):  return "September";
+	case(10): return "October";
+	case(11): return "November";
+	case(12): return "December";
+	default:  return "INVALID MONTH!";
+        }
+    }
+
+    function parseDay(d) {
+        var str = d.toString();
+        if(str[str.length-2] == 1) /* force 12th not 12nd */
+            return d+"th";
+        
+        switch (d%10) {
+        case 1: return d+"st";
+        case 2: return d+"nd";
+        case 3: return d+"rd";
+        default: return d+"th";;
+        }
+    }
+    
     function updateTimer(date, name) {
+        /* diff = time remaining in milliseconds */
         var diff = date.getTime() - (new Date()).getTime();
         if (diff < 0)
             $("#"+name).html(expired);
@@ -19,7 +51,11 @@ var timer = (function () {
             diff -= minutes*minute;
             var seconds = Math.floor(diff / second);
 
-            $("#"+name).html("<h3>" + name + "</h3><p>" + days + " days " + hours + " hours " + minutes + " mins " + seconds + " sec</p>");
+            $("#"+name).html("<h3>" + name + "</h3><p>" + 
+                             date.getHours() + ":" + date.getMinutes() + ", " + parseDay(date.getDate()) + " of " + parseMonth(date.getMonth())
+                             + "</p><p>" +
+                             days + " days " + hours + " hours " + minutes + " mins " + seconds + " sec"
+                             + "</p>");
         }
     }
 
@@ -31,8 +67,6 @@ var timer = (function () {
     }
 
     pub.setup = function () {
-        //new Date(year, month, day, hours, minutes, seconds, milliseconds)
-        
         /*
           setupTimer(new Date("9:30  6  June 2014"), "comp112");
           setupTimer(new Date("9:30  18 June 2014"), "comp150");
@@ -46,6 +80,7 @@ var timer = (function () {
           setupTimer(new Date("14:30 6  June 2014"), "math160");
         */
 
+        /* this date constructor is compatable with ios safari, but less readable :( */ 
         setupTimer(new Date(2014, 5, 6, 9, 30, 0, 0), "comp112");
         setupTimer(new Date(2014, 5, 18, 9, 30, 0, 0), "comp150");
         setupTimer(new Date(2014, 5, 7, 14, 30, 0, 0), "cosc241");
