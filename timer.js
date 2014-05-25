@@ -67,8 +67,7 @@ var timer = (function () {
     }
 
     pub.setup = function () {
-        /*
-          setupTimer(new Date("9:30  6  June 2014"), "comp112");
+          /*setupTimer(new Date("9:30  6  June 2014"), "comp112");
           setupTimer(new Date("9:30  18 June 2014"), "comp150");
           setupTimer(new Date("14:30 7  June 2014"), "cosc241");
           setupTimer(new Date("9:30  4  June 2014"), "cosc243");
@@ -78,7 +77,7 @@ var timer = (function () {
           setupTimer(new Date("14:30 5  June 2014"), "tele301");
           setupTimer(new Date("14:30 18 June 2014"), "math272");
           setupTimer(new Date("14:30 6  June 2014"), "math160");
-        */
+          */
 
         /* this date constructor is compatable with ios safari, but less readable :( */ 
         setupTimer(new Date(2014, 5, 6, 9, 30, 0, 0), "comp112");
@@ -91,6 +90,9 @@ var timer = (function () {
         setupTimer(new Date(2014, 5, 5, 14, 30, 0, 0), "tele301");
         setupTimer(new Date(2014, 5, 18, 14, 30, 0, 0), "math272");
         setupTimer(new Date(2014, 5, 6, 14, 30, 0, 0), "math160");
+
+        setupTimer(new Date(2014, 5, 12, 9, 30, 0, 0), "math201");
+        setupTimer(new Date(2014, 5, 6, 14, 30, 0, 0), "math203");
     }
     return pub;
 
