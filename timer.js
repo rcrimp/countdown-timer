@@ -41,7 +41,7 @@ var timer = (function () {
         /* diff = time remaining in milliseconds */
         var diff = date.getTime() - (new Date()).getTime();
         if (diff < 0)
-            $("#"+name).html(expired);
+            $("#"+name).html("<h3>" + name + "</h3><p>expired</p>");
         else {
             var days = Math.floor(diff / day);
             diff -= days*day;
