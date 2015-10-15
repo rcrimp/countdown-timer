@@ -25,8 +25,7 @@ var timer = (function () {
     }
 
     function parseDay(d) {
-        var str = d.toString();
-        if(str[str.length-2] == 1) /* force 12th not 12nd */
+        if(Math.floor((d/10)%10) == 1) /* force 12th not 12nd */
             return d+"th";
         
         switch (d%10) {
