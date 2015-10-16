@@ -75,7 +75,12 @@ var timer = (function () {
         var timeComponents = timeComponent.split(":");
         
         var year = dateComponents[0];
+        
         var month = dateComponents[1];
+        
+        // Off-by-one hack for Javascript's Date implementation
+        month--;
+        
         var day = dateComponents[2];
         
         var hour = timeComponents[0];
@@ -90,14 +95,14 @@ var timer = (function () {
 
         // just encode as key-value pair since we have no interfaces etc
         var examSchedule = {
-            "cosc344": "2015-09-17 09:30:00",
-            "cosc346": "2015-09-19 09:30:00",
-            "cosc244": "2015-09-27 14:30:00",
-            "cosc348": "2015-09-29 09:30:00",
-            "cosc242": "2015-09-29 09:30:00",
-            "cosc345": "2015-09-31 09:30:00",
-            "comp212": "2015-10-03 09:30:00",
-            "comp160": "2015-10-06 09:30:00"
+            "cosc344": "2015-10-17 09:30:00",
+            "cosc346": "2015-10-19 09:30:00",
+            "cosc244": "2015-10-27 14:30:00",
+            "cosc348": "2015-10-29 09:30:00",
+            "cosc242": "2015-10-29 09:30:00",
+            "cosc345": "2015-10-31 09:30:00",
+            "comp212": "2015-11-03 09:30:00",
+            "comp160": "2015-11-06 09:30:00"
         };
 
         for (var exam in examSchedule) {
