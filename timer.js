@@ -6,22 +6,18 @@ var timer = (function () {
     var hour = 60 * minute;
     var day = 24 * hour;
     
-    function parseMonth(m) {
-        switch (m+1) {
-	case(1):  return "January";
-	case(2):  return "February";
-	case(3):  return "March";
-	case(4):  return "April";
-	case(5):  return "May";
-	case(6):  return "June";
-	case(7):  return "July";
-	case(8):  return "August";
-	case(9):  return "September";
-	case(10): return "October";
-	case(11): return "November";
-	case(12): return "December";
-	default:  return "INVALID MONTH!";
+    function parseMonth(month) {
+        
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        
+        // out-of-bounds check
+        if (month < 0 || month > 11) {
+            
+            // maintain legacy results for legacy consumers of this function
+            return "INVALID MONTH!";
         }
+        
+        return months[month];
     }
 
     function parseDay(d) {
@@ -79,7 +75,12 @@ var timer = (function () {
         var timeComponents = timeComponent.split(":");
         
         var year = dateComponents[0];
+        
         var month = dateComponents[1];
+        
+        // Off-by-one hack for Javascript's Date implementation
+        month--;
+        
         var day = dateComponents[2];
         
         var hour = timeComponents[0];
@@ -94,14 +95,14 @@ var timer = (function () {
 
         // just encode as key-value pair since we have no interfaces etc
         var examSchedule = {
-            "cosc344": "2015-09-17 09:30:00",
-            "cosc346": "2015-09-19 09:30:00",
-            "cosc244": "2015-09-27 14:30:00",
-            "cosc348": "2015-09-29 09:30:00",
-            "cosc242": "2015-09-29 09:30:00",
-            "cosc345": "2015-09-31 09:30:00",
-            "comp212": "2015-10-03 09:30:00",
-            "comp160": "2015-10-06 09:30:00"
+            "cosc344": "2015-10-17 09:30:00",
+            "cosc346": "2015-10-19 09:30:00",
+            "cosc244": "2015-10-27 14:30:00",
+            "cosc348": "2015-10-29 09:30:00",
+            "cosc242": "2015-10-29 09:30:00",
+            "cosc345": "2015-10-31 09:30:00",
+            "comp212": "2015-11-03 09:30:00",
+            "comp160": "2015-11-06 09:30:00"
         };
 
         for (var exam in examSchedule) {
