@@ -64,6 +64,31 @@ var timer = (function () {
             updateTimer(date, name)
         }, 1000);
     }
+    
+    /* roughly "YYYY-MM-DD HH:MM:SS"" */
+    function dateBuilder(dateTimeString) {
+        
+        var dateTimeComponents = dateTimeString.split(" ");
+        
+        var dateComponent = dateTimeComponents[0];
+        
+        var timeComponent = dateTimeComponents[1];
+        
+        var dateComponents = dateComponent.split("-");
+        
+        var timeComponents = timeComponent.split(":");
+        
+        var year = dateComponents[0];
+        var month = dateComponents[1];
+        var day = dateComponents[2];
+        
+        var hour = timeComponents[0];
+        var minute = timeComponents[1];
+        var second = timeComponents[2];
+        
+        // Hard-code zero milliseconds
+        return new Date(year, month, day, hour, minute, second, 0);
+    };
 
     pub.setup = function () {
        /* year, month, day, hour, minute, second, ms */
