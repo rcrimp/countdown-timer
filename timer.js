@@ -91,16 +91,28 @@ var timer = (function () {
     };
 
     pub.setup = function () {
-       /* year, month, day, hour, minute, second, ms */
-       setupTimer(new Date(2015, 9, 17, 9, 30,  0, 0), "cosc344");
-       setupTimer(new Date(2015, 9, 19, 9, 30,  0, 0), "cosc346");
-       setupTimer(new Date(2015, 9, 27, 14, 30,  0, 0), "cosc244");
-       setupTimer(new Date(2015, 9, 29, 9, 30,  0, 0), "cosc348");
-       setupTimer(new Date(2015, 9, 29, 9, 30,  0, 0), "cosc242");
-       setupTimer(new Date(2015, 9, 31, 9, 30,  0, 0), "cosc345");
-       setupTimer(new Date(2015, 10, 3, 9, 30,  0, 0), "comp212");
-       setupTimer(new Date(2015, 10, 6, 9, 30,  0, 0), "comp160");
+
+        // just encode as key-value pair since we have no interfaces etc
+        var examSchedule = {
+            "cosc344": "2015-09-17 09:30:00",
+            "cosc346": "2015-09-19 09:30:00",
+            "cosc244": "2015-09-27 14:30:00",
+            "cosc348": "2015-09-29 09:30:00",
+            "cosc242": "2015-09-29 09:30:00",
+            "cosc345": "2015-09-31 09:30:00",
+            "comp212": "2015-10-03 09:30:00",
+            "comp160": "2015-10-06 09:30:00"
+        };
+
+        for (var exam in examSchedule) {
+
+            var examDateTimeString = examSchedule[exam];
+
+            var examDateTimeObject = dateBuilder(examDateTimeString);
+
+            setupTimer(examDateTimeObject, exam);
         }
+    }
     return pub;
 
 }());
