@@ -6,34 +6,29 @@ var timer = (function () {
     var hour = 60 * minute;
     var day = 24 * hour;
     
-    function parseMonth(m) {
-        switch (m+1) {
-	case(1):  return "January";
-	case(2):  return "February";
-	case(3):  return "March";
-	case(4):  return "April";
-	case(5):  return "May";
-	case(6):  return "June";
-	case(7):  return "July";
-	case(8):  return "August";
-	case(9):  return "September";
-	case(10): return "October";
-	case(11): return "November";
-	case(12): return "December";
-	default:  return "INVALID MONTH!";
+    function parseMonth(month) {
+        
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        
+        // out-of-bounds check
+        if (month < 0 || month > 11) {
+            
+            // maintain legacy results for legacy consumers of this function
+            return "INVALID MONTH!";
         }
+        
+        return months[month];
     }
 
-    function parseDay(d) {
-        if(Math.floor((d/10)%10) == 1) /* force 12th not 12nd */
-            return d+"th";
+    function getDayWithOrdinalIndicator(day) {
         
-        switch (d%10) {
-        case 1: return d+"st";
-        case 2: return d+"nd";
-        case 3: return d+"rd";
-        default: return d+"th";;
+        // 11, 12, and 13 are exceptions.
+        if (11 <= day % 100 && day % 100 <= 13) {
+            return day + "th";
         }
+
+        // avoid conditional to save CPU cycles
+        return day + ["th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"][day % 10];
     }
     
     function updateTimer(date, name) {
@@ -51,7 +46,7 @@ var timer = (function () {
             var seconds = Math.floor(diff / second);
 
             $("#"+name).html("<h3>" + name + "</h3><p>" + 
-                             date.getHours() + ":" + date.getMinutes() + ", " + parseDay(date.getDate()) + " of " + parseMonth(date.getMonth())
+                             date.getHours() + ":" + date.getMinutes() + ", " + getDayWithOrdinalIndicator(date.getDate()) + " of " + parseMonth(date.getMonth())
                              + "</p><p>" +
                              days + " days " + hours + " hours " + minutes + " mins " + seconds + " sec"
                              + "</p>");
@@ -64,18 +59,60 @@ var timer = (function () {
             updateTimer(date, name)
         }, 1000);
     }
+    
+    /* roughly "YYYY-MM-DD HH:MM:SS"" */
+    function dateBuilder(dateTimeString) {
+        
+        var dateTimeComponents = dateTimeString.split(" ");
+        
+        var dateComponent = dateTimeComponents[0];
+        
+        var timeComponent = dateTimeComponents[1];
+        
+        var dateComponents = dateComponent.split("-");
+        
+        var timeComponents = timeComponent.split(":");
+        
+        var year = dateComponents[0];
+        
+        var month = dateComponents[1];
+        
+        // Off-by-one hack for Javascript's Date implementation
+        month--;
+        
+        var day = dateComponents[2];
+        
+        var hour = timeComponents[0];
+        var minute = timeComponents[1];
+        var second = timeComponents[2];
+        
+        // Hard-code zero milliseconds
+        return new Date(year, month, day, hour, minute, second, 0);
+    };
 
     pub.setup = function () {
-       /* year, month, day, hour, minute, second, ms */
-       setupTimer(new Date(2015, 9, 17, 9, 30,  0, 0), "cosc344");
-       setupTimer(new Date(2015, 9, 19, 9, 30,  0, 0), "cosc346");
-       setupTimer(new Date(2015, 9, 27, 14, 30,  0, 0), "cosc244");
-       setupTimer(new Date(2015, 9, 29, 9, 30,  0, 0), "cosc348");
-       setupTimer(new Date(2015, 9, 29, 9, 30,  0, 0), "cosc242");
-       setupTimer(new Date(2015, 9, 31, 9, 30,  0, 0), "cosc345");
-       setupTimer(new Date(2015, 10, 3, 9, 30,  0, 0), "comp212");
-       setupTimer(new Date(2015, 10, 6, 9, 30,  0, 0), "comp160");
+
+        // just encode as key-value pair since we have no interfaces etc
+        var examSchedule = {
+            "cosc344": "2015-10-17 09:30:00",
+            "cosc346": "2015-10-19 09:30:00",
+            "cosc244": "2015-10-27 14:30:00",
+            "cosc348": "2015-10-29 09:30:00",
+            "cosc242": "2015-10-29 09:30:00",
+            "cosc345": "2015-10-31 09:30:00",
+            "comp212": "2015-11-03 09:30:00",
+            "comp160": "2015-11-06 09:30:00"
+        };
+
+        for (var exam in examSchedule) {
+
+            var examDateTimeString = examSchedule[exam];
+
+            var examDateTimeObject = dateBuilder(examDateTimeString);
+
+            setupTimer(examDateTimeObject, exam);
         }
+    }
     return pub;
 
 }());
