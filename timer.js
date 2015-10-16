@@ -20,16 +20,15 @@ var timer = (function () {
         return months[month];
     }
 
-    function parseDay(d) {
-        if(Math.floor((d/10)%10) == 1) /* force 12th not 12nd */
-            return d+"th";
+    function getDayWithOrdinalIndicator(day) {
         
-        switch (d%10) {
-        case 1: return d+"st";
-        case 2: return d+"nd";
-        case 3: return d+"rd";
-        default: return d+"th";;
+        // 11, 12, and 13 are exceptions.
+        if (11 <= day % 100 && day % 100 <= 13) {
+            return day + "th";
         }
+
+        // avoid conditional to save CPU cycles
+        return day + ["th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"][day % 10];
     }
     
     function updateTimer(date, name) {
@@ -47,7 +46,7 @@ var timer = (function () {
             var seconds = Math.floor(diff / second);
 
             $("#"+name).html("<h3>" + name + "</h3><p>" + 
-                             date.getHours() + ":" + date.getMinutes() + ", " + parseDay(date.getDate()) + " of " + parseMonth(date.getMonth())
+                             date.getHours() + ":" + date.getMinutes() + ", " + getDayWithOrdinalIndicator(date.getDate()) + " of " + parseMonth(date.getMonth())
                              + "</p><p>" +
                              days + " days " + hours + " hours " + minutes + " mins " + seconds + " sec"
                              + "</p>");
