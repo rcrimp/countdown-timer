@@ -34,9 +34,9 @@ var timer = (function () {
     function updateTimer(date, name) {
         /* diff = time remaining in milliseconds */
         var diff = date.getTime() - (new Date()).getTime();
-        if (diff < 0)
+        if (diff < 0) {
             $("#"+name).html("<h3>" + name + "</h3><p>expired</p>");
-        else {
+        } else {
             var days = Math.floor(diff / day);
             diff -= days*day;
             var hours = Math.floor(diff / hour);
