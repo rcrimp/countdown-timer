@@ -34,9 +34,9 @@ var timer = (function () {
     function updateTimer(date, name) {
         /* diff = time remaining in milliseconds */
         var diff = date.getTime() - (new Date()).getTime();
-        if (diff < 0)
+        if (diff < 0) {
             $("#"+name).html("<h3>" + name + "</h3><p>expired</p>");
-        else {
+        } else {
             var days = Math.floor(diff / day);
             diff -= days*day;
             var hours = Math.floor(diff / hour);
@@ -60,55 +60,25 @@ var timer = (function () {
         }, 1000);
     }
     
-    /* roughly "YYYY-MM-DD HH:MM:SS"" */
-    function dateBuilder(dateTimeString) {
-        
-        var dateTimeComponents = dateTimeString.split(" ");
-        
-        var dateComponent = dateTimeComponents[0];
-        
-        var timeComponent = dateTimeComponents[1];
-        
-        var dateComponents = dateComponent.split("-");
-        
-        var timeComponents = timeComponent.split(":");
-        
-        var year = dateComponents[0];
-        
-        var month = dateComponents[1];
-        
-        // Off-by-one hack for Javascript's Date implementation
-        month--;
-        
-        var day = dateComponents[2];
-        
-        var hour = timeComponents[0];
-        var minute = timeComponents[1];
-        var second = timeComponents[2];
-        
-        // Hard-code zero milliseconds
-        return new Date(year, month, day, hour, minute, second, 0);
-    };
-
     pub.setup = function () {
 
         // just encode as key-value pair since we have no interfaces etc
         var examSchedule = {
-            "cosc344": "2015-10-17 09:30:00",
-            "cosc346": "2015-10-19 09:30:00",
-            "cosc244": "2015-10-27 14:30:00",
-            "cosc348": "2015-10-29 09:30:00",
-            "cosc242": "2015-10-29 09:30:00",
-            "cosc345": "2015-10-31 09:30:00",
-            "comp212": "2015-11-03 09:30:00",
-            "comp160": "2015-11-06 09:30:00"
+            "cosc344": "2015-10-17T09:30:00",
+            "cosc346": "2015-10-19T09:30:00",
+            "cosc244": "2015-10-27T14:30:00",
+            "cosc348": "2015-10-29T09:30:00",
+            "cosc242": "2015-10-29T09:30:00",
+            "cosc345": "2015-10-31T09:30:00",
+            "comp212": "2015-11-03T09:30:00",
+            "comp160": "2015-11-06T09:30:00"
         };
 
         for (var exam in examSchedule) {
 
             var examDateTimeString = examSchedule[exam];
 
-            var examDateTimeObject = dateBuilder(examDateTimeString);
+            var examDateTimeObject = new Date(examDateTimeString);
 
             setupTimer(examDateTimeObject, exam);
         }
